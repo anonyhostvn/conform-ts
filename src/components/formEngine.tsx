@@ -11,6 +11,7 @@ type inputConfig = {
     size: number,
     key: string,
     element: JSX.Element,
+    label: string,
     fieldDecorator: GetFieldDecoratorOptions
 };
 
@@ -41,9 +42,9 @@ const FormBody = forwardRef<FormComponentProps, FormBodyProps>(
             <Form>
                 <Row gutter={24}>
                     {
-                        inputFields.map(({size, key, element , fieldDecorator,}) => (
+                        inputFields.map(({size, key, element , fieldDecorator, label}) => (
                             <Col span={size} key={key}>
-                                <Form.Item>
+                                <Form.Item label={label}>
                                     {
                                         getFieldDecorator(
                                             key,
