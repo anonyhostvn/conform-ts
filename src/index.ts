@@ -1,1 +1,1 @@
-export {FormEngine, inputFieldsType, fieldChangeType, FormBodyProps} from './components/formEngine';
+export {FormEngine, InputFieldsType, FieldChangeType, FormBodyProps} from './components/formEngine';

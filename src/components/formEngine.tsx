@@ -7,7 +7,7 @@ import {
 } from 'antd/lib/form';
 import {GetFieldDecoratorOptions} from 'antd/lib/form/Form';
 
-type inputConfig = {
+type InputConfig = {
     size: number,
     key: string,
     element: JSX.Element,
@@ -15,17 +15,17 @@ type inputConfig = {
     fieldDecorator: GetFieldDecoratorOptions
 };
 
-export declare type inputFieldsType = inputConfig[];
+export declare type InputFieldsType = InputConfig[];
 
-export declare type fieldChangeType = {
+export declare type FieldChangeType = {
     key: string,
     value: any
 }
 
 export interface FormBodyProps extends FormComponentProps {
-    inputFields: inputFieldsType,
+    inputFields: InputFieldsType,
     dataSource: any,
-    onFieldChangeFunc: (listFieldChanged: fieldChangeType[]) => void,
+    onFieldChangeFunc: (listFieldChanged: FieldChangeType[]) => void,
 }
 
 const FormBody = forwardRef<FormComponentProps, FormBodyProps>(
