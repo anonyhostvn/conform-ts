@@ -15,7 +15,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/minhdatplus/autodux-ts.git"
+        "url": "https://github.com/anonyhostvn/conform-ts"
     },
     "keywords": [
         "React",
@@ -26,9 +26,9 @@
     "author": "anonyhostvn",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/minhdatplus/autodux-ts/issues"
+        "url": "https://github.com/anonyhostvn/conform-ts/issues"
     },
-    "homepage": "https://github.com/minhdatplus/autodux-ts#readme",
+    "homepage": "https://github.com/anonyhostvn/conform-ts#readme",
     "devDependencies": {
         "@types/jest": "^25.1.2",
         "@types/ramda": "github:types/npm-ramda#dist",

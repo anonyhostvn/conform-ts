@@ -1,18 +1,17 @@
-import * as React from 'react';
-import {forwardRef, useImperativeHandle} from 'react';
+import React, {ComponentType, forwardRef, useImperativeHandle} from 'react';
 import {
-  Button, Col, Form, Row,
+  Col, Form, Row,
 } from 'antd';
 import {
   FormComponentProps,
 } from 'antd/lib/form';
-import {GetFieldDecoratorOptions, WrappedFormUtils} from 'antd/lib/form/Form';
+import {GetFieldDecoratorOptions} from 'antd/lib/form/Form';
 
 type inputConfig = {
   size: number,
   key: string,
-  Element: any,
-  propsElement: object,
+  Element: ComponentType,
+  propsElement: any,
   fieldDecorator: GetFieldDecoratorOptions
 };
 
@@ -25,9 +24,7 @@ export declare type fieldChangeType = {
 
 export interface FormBodyProps extends FormComponentProps {
   inputFields: inputFieldsType,
-  onSubmit: (data: object) => void,
-  formName: string,
-  dataSource: object,
+  dataSource: any,
   onFieldChangeFunc: (listFieldChanged: fieldChangeType[]) => void,
 }
 
@@ -36,17 +33,10 @@ const FormBody = forwardRef<FormComponentProps, FormBodyProps> (
     {
       form: {getFieldDecorator, validateFieldsAndScroll},
       inputFields,
-      onSubmit,
       form,
-    }: FormBodyProps & { form: WrappedFormUtils }, ref,
+    }: FormBodyProps, ref
   ) => {
     useImperativeHandle(ref, () => ({form}));
-
-    const handleSubmit = () => {
-      validateFieldsAndScroll((err: any, values: any) => {
-        if (!err) onSubmit(values);
-      });
-    };
 
     return (
       <Form>
@@ -68,15 +58,12 @@ const FormBody = forwardRef<FormComponentProps, FormBodyProps> (
             ))
           }
         </Row>
-        <Form.Item>
-          <Button onClick={handleSubmit}> Submit </Button>
-        </Form.Item>
       </Form>
     );
   },
 );
 
-const transformDataSourceToMapPropsToFields = (dataSource: object) => {
+const transformDataSourceToMapPropsToFields = (dataSource: any) => {
   let res = {};
   Object.entries(dataSource).forEach(
     ([key, value]: [string, any]) => {
@@ -90,7 +77,7 @@ const transformDataSourceToMapPropsToFields = (dataSource: object) => {
 };
 
 export const FormEngine = Form.create<FormBodyProps>({
-  name: `awesome-form`,
+  name: 'awesome-form',
   mapPropsToFields: ({dataSource} : FormBodyProps) => ({
     ...transformDataSourceToMapPropsToFields(dataSource),
   }),
@@ -101,5 +88,5 @@ export const FormEngine = Form.create<FormBodyProps>({
         value: value.value,
       }),
     ));
-  },
+  }
 })(FormBody);
