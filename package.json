@@ -1,0 +1,52 @@
+{
+    "name": "conform-ts",
+    "version": "0.0.0",
+    "description": "Support config file for build form component of antdesign",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
+    "scripts": {
+        "build": "tsc",
+        "test": "jest --config jestconfig.json",
+        "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+        "lint": "tslint -p tsconfig.json",
+        "prepare": "npm run build",
+        "preversion": "npm run lint",
+        "prepublishOnly": "npm run lint"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/minhdatplus/autodux-ts.git"
+    },
+    "keywords": [
+        "React",
+        "Redux",
+        "TypeScript",
+        "autodux"
+    ],
+    "author": "anonyhostvn",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/minhdatplus/autodux-ts/issues"
+    },
+    "homepage": "https://github.com/minhdatplus/autodux-ts#readme",
+    "devDependencies": {
+        "@types/jest": "^25.1.2",
+        "@types/ramda": "github:types/npm-ramda#dist",
+        "jest": "^25.1.0",
+        "prettier": "^1.19.1",
+        "ts-jest": "^25.2.0",
+        "tslint-config-prettier": "^1.18.0",
+        "typescript": "^3.7.5"
+    },
+    "dependencies": {
+        "@types/antd": "^1.0.0",
+        "esm": "3.2.25",
+        "ramda": "0.27.0",
+        "react": "^16.12.0",
+        "tslint": "^6.0.0"
+    },
+    "files": [
+        "lib",
+        "component"
+    ]
+}
