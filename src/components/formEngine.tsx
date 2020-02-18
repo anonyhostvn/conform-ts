@@ -26,6 +26,7 @@ export interface FormBodyProps extends FormComponentProps {
     inputFields: InputFieldsType,
     dataSource: any,
     onFieldChangeFunc: (listFieldChanged: FieldChangeType[]) => void,
+    onSubmit?: (values: any) => void
 }
 
 const FormBody = forwardRef<FormComponentProps, FormBodyProps>(
@@ -34,12 +35,22 @@ const FormBody = forwardRef<FormComponentProps, FormBodyProps>(
             form: {getFieldDecorator, validateFieldsAndScroll},
             inputFields,
             form,
+            onSubmit
         }: FormBodyProps, ref
     ) => {
         useImperativeHandle(ref, () => ({form}));
+        const keyDownHandling = (e: React.KeyboardEvent) => {
+            if (e.key === 'enter') {
+                form.validateFieldsAndScroll((err, values) => {
+                    if (!err) {
+                        if (onSubmit) onSubmit(values);
+                    }
+                });
+            }
+        };
 
         return (
-            <Form>
+            <Form onKeyDown={keyDownHandling}>
                 <Row gutter={24}>
                     {
                         inputFields.map(({size, key, element , fieldDecorator, label}) => (
