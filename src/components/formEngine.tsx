@@ -3,7 +3,7 @@ import {
     Col, Form, Row,
 } from 'antd';
 import {
-    FormComponentProps,
+    FormComponentProps, FormProps,
 } from 'antd/lib/form';
 import {GetFieldDecoratorOptions} from 'antd/lib/form/Form';
 
@@ -25,7 +25,8 @@ export declare type FieldChangeType = {
 export interface FormBodyProps extends FormComponentProps {
     inputFields: InputFieldsType,
     dataSource: any,
-    onFieldChangeFunc: (listFieldChanged: FieldChangeType[]) => void
+    onFieldChangeFunc: (listFieldChanged: FieldChangeType[]) => void,
+    restProps: FormProps
 }
 
 const FormBody = forwardRef<FormComponentProps, FormBodyProps>(
@@ -34,12 +35,13 @@ const FormBody = forwardRef<FormComponentProps, FormBodyProps>(
             form: {getFieldDecorator, validateFieldsAndScroll},
             inputFields,
             form,
+            restProps
         }: FormBodyProps, ref
     ) => {
         useImperativeHandle(ref, () => ({form}));
 
         return (
-            <Form>
+            <Form {...restProps}>
                 <Row gutter={24}>
                     {
                         inputFields.map(({size, key, element , fieldDecorator, label}) => (
