@@ -1,18 +1,18 @@
-import React, {forwardRef, useImperativeHandle} from 'react';
+import React from 'react';
 import {
     Col, Form, Row,
 } from 'antd';
 import {
-    FormComponentProps, FormProps,
+    FormProps
 } from 'antd/lib/form';
-import {GetFieldDecoratorOptions} from 'antd/lib/form/Form';
+import {FormInstance} from 'antd/lib/form/util';
+import {FormItemProps} from 'antd/lib/form/FormItem';
 
 type InputConfig = {
     size: number,
     key: string,
     element: JSX.Element,
-    label: string,
-    fieldDecorator: GetFieldDecoratorOptions
+    formItemProps: FormItemProps
 };
 
 export declare type InputFieldsType = InputConfig[];
@@ -22,71 +22,45 @@ export declare type FieldChangeType = {
     value: any
 }
 
-export interface FormBodyProps extends FormComponentProps {
+export interface FormBodyProps {
     inputFields: InputFieldsType,
-    dataSource: any,
     onFieldChangeFunc: (listFieldChanged: FieldChangeType[]) => void,
-    restProps: FormProps
+    formProps: FormProps,
+    formInstance: FormInstance,
+    name: string,
+    initialValue: any
 }
 
-const FormBody = forwardRef<FormComponentProps, FormBodyProps>(
-    (
-        {
-            form: {getFieldDecorator, validateFieldsAndScroll},
-            inputFields,
-            form,
-            restProps
-        }: FormBodyProps, ref
-    ) => {
-        useImperativeHandle(ref, () => ({form}));
+const FormBody: React.FC<FormBodyProps> = (
+    {
+        inputFields,
+        formProps,
+        formInstance,
+        name,
+        initialValue
+    }
+)  => {
 
-        return (
-            <Form {...restProps}>
-                <Row gutter={24}>
-                    {
-                        inputFields.map(({size, key, element , fieldDecorator, label}) => (
-                            <Col span={size} key={key}>
-                                <Form.Item label={label}>
-                                    {
-                                        getFieldDecorator(
-                                            key,
-                                            fieldDecorator,
-                                        )(element)
-                                    }
-                                </Form.Item>
-                            </Col>
-                        ))
-                    }
-                </Row>
-            </Form>
-        );
-    },
-);
-
-const transformDataSourceToMapPropsToFields = (dataSource: any) => {
-    let res = {};
-    Object.entries(dataSource).forEach(
-        ([key, value]: [string, any]) => {
-            res = {
-                ...res,
-                [key]: Form.createFormField({value}),
-            };
-        },
+    return (
+        <Form
+            {...formProps}
+            form={formInstance}
+            name={name}
+            initialValues={initialValue}
+        >
+            <Row gutter={24}>
+                {
+                    inputFields.map(({size, key, element, formItemProps}) => (
+                        <Col span={size} key={key}>
+                            <Form.Item {...formItemProps} name={key}>
+                                {element}
+                            </Form.Item>
+                        </Col>
+                    ))
+                }
+            </Row>
+        </Form>
     );
-    return res;
 };
 
-export const FormEngine = Form.create<FormBodyProps>({
-    name: 'awesome-form',
-    mapPropsToFields: ({dataSource}: FormBodyProps) => ({
-        ...transformDataSourceToMapPropsToFields(dataSource),
-    }),
-    onFieldsChange: ({onFieldChangeFunc}: FormBodyProps, fields: any) => {
-        onFieldChangeFunc(Object.entries(fields).map(
-            ([, value]: [string, any]): any => ({
-                key: value.name,
-                value: value.value,
-            }),
-        ));
-    }
-})(FormBody);
+export default FormBody;
