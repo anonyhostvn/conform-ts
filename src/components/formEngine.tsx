@@ -11,7 +11,6 @@ import {FormItemProps} from 'antd/lib/form/FormItem';
 type InputConfig = {
     size: number,
     key: string,
-    element: JSX.Element,
     formItemProps: FormItemProps
 };
 
@@ -31,7 +30,7 @@ export interface FormBodyProps {
     initialValue: any
 }
 
-const FormBody: React.FC<FormBodyProps> = (
+export const FormEngine: React.FC<FormBodyProps> = (
     {
         inputFields,
         formProps,
@@ -50,10 +49,10 @@ const FormBody: React.FC<FormBodyProps> = (
         >
             <Row gutter={24}>
                 {
-                    inputFields.map(({size, key, element, formItemProps}) => (
+                    inputFields.map(({size, key, formItemProps}) => (
                         <Col span={size} key={key}>
                             <Form.Item {...formItemProps} name={key}>
-                                {element}
+                                {formItemProps.children}
                             </Form.Item>
                         </Col>
                     ))
@@ -63,4 +62,3 @@ const FormBody: React.FC<FormBodyProps> = (
     );
 };
 
-export default FormBody;
