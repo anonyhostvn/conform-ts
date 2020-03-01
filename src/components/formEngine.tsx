@@ -16,17 +16,11 @@ type InputConfig = {
 
 export declare type InputFieldsType = InputConfig[];
 
-export declare type FieldChangeType = {
-    key: string,
-    value: any
-}
-
 export interface FormBodyProps {
     inputFields: InputFieldsType,
     formProps: FormProps,
     formInstance: FormInstance,
     name: string,
-    initialValue: any
 }
 
 export const FormEngine: React.FC<FormBodyProps> = (
@@ -34,8 +28,7 @@ export const FormEngine: React.FC<FormBodyProps> = (
         inputFields,
         formProps,
         formInstance,
-        name,
-        initialValue
+        name
     }
 )  => {
 
@@ -44,7 +37,6 @@ export const FormEngine: React.FC<FormBodyProps> = (
             {...formProps}
             form={formInstance}
             name={name}
-            initialValues={initialValue}
         >
             <Row gutter={24}>
                 {
