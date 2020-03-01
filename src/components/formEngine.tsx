@@ -23,7 +23,6 @@ export declare type FieldChangeType = {
 
 export interface FormBodyProps {
     inputFields: InputFieldsType,
-    onFieldChangeFunc: (listFieldChanged: FieldChangeType[]) => void,
     formProps: FormProps,
     formInstance: FormInstance,
     name: string,
